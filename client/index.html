@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <section class="chat" id="chat">
+      <ul class="ul-messages " id="messages-sended"></ul>
+      <form id="form" class="form">
+        <input
+          type="text"
+          name="message"
+          class="message"
+          id="message"
+          placeholder="Ingrese un mensaje"
+          autocomplete="off"
+        />
+        <button class="submit-btn" id="submit-btn" type="submit">
+          <i class="fa-solid fa-arrow-up send-icon"></i>
+        </button>
+      </form>
+    </section>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
