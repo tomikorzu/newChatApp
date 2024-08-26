@@ -7,6 +7,7 @@ const message = document.getElementById("message");
 const submitBtn = document.getElementById("submit-btn");
 const messagesSended = document.getElementById('messages-sended')
 
+
 socket.on('chat message', (msg) =>{
     const item = `<li class="message-received">${msg}</li>`
     messagesSended.insertAdjacentHTML('beforeend', item)
