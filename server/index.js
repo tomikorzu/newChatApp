@@ -5,6 +5,23 @@ import { createServer } from "node:http";
 import dotenv from "dotenv";
 import { createClient } from "@libsql/client";
 
+// quiero agregar el horario en el que se envio el mensaje y el nombre del usuario
+// quiero agregar un boton para borrar todos los mensajes
+// quiero agregar un boton para borrar un mensaje en especifico
+// quiero agregar un boton para editar un mensaje en especifico
+
+function setTimer() {
+  let time = new Date();
+  let hours = time.getHours();
+  let minutes = time.getMinutes();
+  let ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  let strTime = hours + ":" + minutes + " " + ampm;
+  return strTime;
+}
+
 dotenv.config();
 const port = process.env.PORT ?? 3000;
 
@@ -33,6 +50,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chat message", async (msg) => {
+    let timeSent = setTimer(); // Llamas a setTimer aquí
     let result;
     try {
       result = await db.execute({
@@ -43,7 +61,11 @@ io.on("connection", (socket) => {
       console.error(e);
       return;
     }
-    io.emit("chat message", msg, result.lastInsertRowid.toString());
+    io.emit(
+      "chat message",
+      { msg, timeSent },
+      result.lastInsertRowid.toString()
+    );
   });
 });
 

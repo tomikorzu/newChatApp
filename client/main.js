@@ -5,14 +5,15 @@ const chat = document.getElementById("chat");
 const form = document.getElementById("form");
 const message = document.getElementById("message");
 const submitBtn = document.getElementById("submit-btn");
-const messagesSended = document.getElementById('messages-sended')
+const messagesSended = document.getElementById("messages-sended");
 
-
-socket.on('chat message', (msg) =>{
-    const item = `<li class="message-received">${msg}</li>`
-    messagesSended.insertAdjacentHTML('beforeend', item)
-    scrollTo()
-})
+socket.on("chat message", (data) => {
+  const message = data.msg; // Acceder al mensaje
+  const timeSent = data.timeSent; // Acceder a la hora
+  const item = `<li class="message-received"><span class="message-text">${message}</span> <span class="real-time">${timeSent}</span></li>`;
+  messagesSended.insertAdjacentHTML("beforeend", item);
+  scrollTo();
+});
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -22,7 +23,6 @@ form.addEventListener("submit", function (e) {
   }
 });
 
-function scrollTo (){
-    messagesSended.scrollTop = messagesSended.scrollHeight
-
+function scrollTo() {
+  messagesSended.scrollTop = messagesSended.scrollHeight;
 }
