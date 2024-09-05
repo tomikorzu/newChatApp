@@ -7,10 +7,16 @@ const message = document.getElementById("message");
 const submitBtn = document.getElementById("submit-btn");
 const messagesSended = document.getElementById("messages-sended");
 
+let username = prompt("Enter your username:"); // Pedir al usuario su nombre
+socket.emit("set username", username); // Enviar el nombre de usuario al servidor
+
 socket.on("chat message", (data) => {
-  const message = data.msg; // Acceder al mensaje
-  const timeSent = data.timeSent; // Acceder a la hora
-  const item = `<li class="message-received"><span class="message-text">${message}</span> <span class="real-time">${timeSent}</span></li>`;
+  const message = data.msg;
+  const timeSent = data.timeSent;
+  const user = data.username; // Acceder al nombre de usuario
+  const messageClass =
+    data.id === socket.id ? "message-own" : "message-received"; // Diferenciar mensajes propios
+  const item = `<li class="${messageClass}"><span class="message-text">${user}: ${message}</span> <span class="real-time">${timeSent}</span></li>`;
   messagesSended.insertAdjacentHTML("beforeend", item);
   scrollTo();
 });
