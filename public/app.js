@@ -69,23 +69,44 @@ socket.on("activity", (data) => {
   chatDisplay.scrollTop = chatDisplay.scrollHeight;
 });
 
-let activityTimer
-socket.on('activity', (name) => {
+let activityTimer;
+socket.on("activity", (name) => {
   activity.textContent = `${name} is typing...`;
   clearTimeout(activityTimer);
   activityTimer = setTimeout(() => {
-    activity.textContent = '';
+    activity.textContent = "";
   }, 3000);
-})
+});
 
-function showRooms  (rooms) {
-  roomList.textContent  = '';
-  if (rooms) { 
+socket.on("userList", ({ users }) => {
+  showUsers(users);
+});
+
+socket.on("roomList", ({ rooms }) => {
+  showRooms(rooms);
+});
+
+function showUSers(users) {
+  userList.textContent = "";
+  if (users) {
+    users.innerHTML = `<em>Users in ${chatRoom.value}:</em>`;
+    users.foreach((user, i) => {
+      userList.textContent += `${user.name}`;
+      if (users.length > 1 && i !== users.length - 1) {
+        userList.textContent += ",";
+      }
+    });
+  }
+}
+
+function showRooms(rooms) {
+  roomList.textContent = "";
+  if (rooms) {
     roomList.innerHTML = `<em>Active Rooms:</em>`;
-    rooms.foreach ((room, i) => {
+    rooms.foreach((room, i) => {
       roomList.textContent += `${room}`;
       if (rooms.length > 1 && i !== rooms.length - 1) {
-        roomList.textContent += ',';
+        roomList.textContent += ",";
       }
     });
   }
