@@ -1,5 +1,5 @@
 import express from "express";
-import { server } from "socket.io";
+import { Server } from "socket.io";
 import path from "path";
 import { fileURLToPath } from "url";
 import { get } from "http";
@@ -16,6 +16,15 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const expressServer = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+const io = new Server(expressServer, {
+  cors: {
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://chat-app-socket-io.herokuapp.com"
+        : "http://localhost:3000",
+  },
 });
 
 const usersState = {
@@ -99,18 +108,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("activity", (name) => {
-    const room = getUser(socket.id)?.room; 
+    const room = getUser(socket.id)?.room;
     if (room) {
-        socket.broadcast.to(room).emit("activity", name); 
+      socket.broadcast.to(room).emit("activity", name);
     }
-});
-
-  socket.on("enterRoom", (data) => {
-    socket.join(data.room);
-    socket.to(data.room).emit("message", {
-      name: ADMIN,
-      text: `${data.name} has joined the room`,
-    });
   });
 });
 
@@ -121,7 +122,7 @@ function buildMessage(name, text) {
     time: new Intl.DateTimeFormat("default", {
       hour: "numeric",
       minute: "numeric",
-    }).format(new Date()),
+    }).format(new Date()), // Correcto
   };
 }
 

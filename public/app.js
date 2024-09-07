@@ -7,6 +7,7 @@ const userList = document.querySelector(".user-list");
 const roomList = document.querySelector(".room-list");
 const activity = document.querySelector(".activity");
 const chatDisplay = document.querySelector(".chat-display");
+let chatRoom = "exampleRoom";
 
 function sendMessage(e) {
   e.preventDefault();
@@ -32,7 +33,7 @@ document.querySelector(".form-msg").addEventListener("submit", sendMessage);
 document.querySelector(".form-join").addEventListener("submit", enterRoom);
 
 inputMsg.addEventListener("keypress", function () {
-  socket.emit("activity", inputName.value);
+  socket.emit("activity", { name: inputName.value });
 });
 
 //Listen for messages
@@ -47,7 +48,7 @@ socket.on("activity", (data) => {
   if (name !== "Admin") {
     li.innerHTML = `
         <div class="post__header ${
-          name === nameInput.value
+          name === inputName.value
             ? "post__header--user "
             : "post__header--reply"
         }">
@@ -86,11 +87,11 @@ socket.on("roomList", ({ rooms }) => {
   showRooms(rooms);
 });
 
-function showUSers(users) {
-  userList.textContent = "";
-  if (users) {
-    users.innerHTML = `<em>Users in ${chatRoom.value}:</em>`;
-    users.foreach((user, i) => {
+function showUsers(users) {
+  userList.textContent = ""; // Limpiamos la lista de usuarios
+  if (users && Array.isArray(users)) {
+    userList.innerHTML = `<em>Users in ${chatRoom}:</em>`;
+    users.forEach((user, i) => {
       userList.textContent += `${user.name}`;
       if (users.length > 1 && i !== users.length - 1) {
         userList.textContent += ",";
@@ -101,13 +102,14 @@ function showUSers(users) {
 
 function showRooms(rooms) {
   roomList.textContent = "";
-  if (rooms) {
-    roomList.innerHTML = `<em>Active Rooms:</em>`;
-    rooms.foreach((room, i) => {
+  if (Array.isArray(rooms)) {
+    rooms.forEach((room, i) => {
       roomList.textContent += `${room}`;
       if (rooms.length > 1 && i !== rooms.length - 1) {
         roomList.textContent += ",";
       }
     });
+  } else {
+    console.error("rooms is not an array:", rooms);
   }
 }
