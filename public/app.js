@@ -37,36 +37,26 @@ inputMsg.addEventListener("keypress", function () {
 });
 
 //Listen for messages
-socket.on("activity", (data) => {
-  activity.textContent = "";
-  const { name, text, time } = data;
+socket.on("message", (data) => {
+  const { name, text } = data;
   const li = document.createElement("li");
   li.className = "post";
   if (name === inputName.value) li.className = "post post--left";
-  if (name !== inputName.value && name !== "Admin")
-    li.className = "post post--right";
-  if (name !== "Admin") {
-    li.innerHTML = `
-        <div class="post__header ${
-          name === inputName.value
-            ? "post__header--user "
-            : "post__header--reply"
-        }">
-        <span class="post__header--name">${name}</span>
-        <span class="post__header--time">${name}</span>
-        </div>
-        <div class="post__ text">${text}</div> 
+  else li.className = "post post--right";
 
-      `;
-  } else {
-    li.innerHTML = `
-        <div class="post__text">${text}</div> 
-        
-
-      `;
-  }
-  document.querySelector(".chat-display").appendChild(li);
-
+  li.innerHTML = `
+    <div class="post__header ${
+      name === inputName.value ? "post__header--user" : "post__header--reply"
+    }">
+      <span class="post__header--name">${name}</span>
+      <span class="post__header--time">${new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}</span>
+    </div>
+    <div class="post__text">${text}</div>
+  `;
+  chatDisplay.appendChild(li);
   chatDisplay.scrollTop = chatDisplay.scrollHeight;
 });
 

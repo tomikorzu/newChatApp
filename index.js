@@ -42,6 +42,10 @@ const usersState = {
 
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
+  socket.on("message", (data) => {
+    // Aquí puedes retransmitir el mensaje a todos los usuarios en la sala, por ejemplo:
+    io.to(data.room).emit("message", data);
+  });
 
   socket.emit("message", buildMessage(ADMIN, "Welcome to the chat app!"));
 
