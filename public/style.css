@@ -1,0 +1,138 @@
+/* Icons */
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css);
+
+body {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+  padding: 30px;
+  grid-template-rows: 1fr;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+:root {
+  color-scheme: light dark;
+}
+
+.apply-blur{
+    filter: blur(5px);
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #999;
+    border-radius: 10px;
+    transition: all .4s;
+}
+
+.form-join{
+    flex-direction: column;
+    position: fixed;
+    gap: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 400%);
+    display: none;
+    padding: 20px;
+    background-color: #555;
+    border-radius: 10px;
+    transition: transform .4s;
+    z-index: 1;
+}
+
+.show-form{
+    transform: translate(-50%, -50%);
+}
+.h2-form-join{
+    text-align: center;
+    font-size: 1.5em;
+    color: #fff;
+}
+.input-form-join{
+    outline: none;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #999;
+    border: none;
+}
+
+.send-form-join{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+}
+
+.post__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post__header--name{
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.post__header--time{
+    font-size: 0.75em;
+    color: #999;
+}
+.post__text{
+    font-size: 1em;
+    color: #333;
+}
+
+.post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post--right{
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.post--left{
+    background-color: #a8a4a4;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.post__header--user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.post__header--reply{
+    font-size: 0.75em;
+    color: #999;
+}

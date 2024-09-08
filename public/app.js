@@ -7,7 +7,16 @@ const userList = document.querySelector(".user-list");
 const roomList = document.querySelector(".room-list");
 const activity = document.querySelector(".activity");
 const chatDisplay = document.querySelector(".chat-display");
-let chatRoom = "exampleRoom";
+const joinBtn = document.getElementById("join");
+const main = document.querySelector("main");
+const formJoin = document.querySelector(".form-join");
+let chatRoom = "Room";
+
+joinBtn.addEventListener("click", enterToChat);
+
+window.onload = () => {
+  showJoinMenu();
+};
 
 function sendMessage(e) {
   e.preventDefault();
@@ -49,12 +58,14 @@ socket.on("message", (data) => {
       name === inputName.value ? "post__header--user" : "post__header--reply"
     }">
       <span class="post__header--name">${name}</span>
-      <span class="post__header--time">${new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      })}</span>
-    </div>
-    <div class="post__text">${text}</div>
+      </div>
+      <div class="post__text">
+        ${text}
+        <span class="post__header--time">${new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}</span>
+        </div>
   `;
   chatDisplay.appendChild(li);
   chatDisplay.scrollTop = chatDisplay.scrollHeight;
@@ -102,4 +113,27 @@ function showRooms(rooms) {
   } else {
     console.error("rooms is not an array:", rooms);
   }
+}
+
+function applyBlur() {
+  main.classList.add("apply-blur");
+}
+function quitBlur() {
+  main.classList.remove("apply-blur");
+}
+
+function showJoinMenu() {
+  applyBlur();
+  formJoin.style.display = "flex";
+  setTimeout(() => {
+    formJoin.classList.add("show-form");
+  }, 400);
+}
+
+function enterToChat() {
+  quitBlur();
+  formJoin.classList.remove("show-form");
+  setTimeout(() => {
+    formJoin.style.display = "none";
+  }, 1000);
 }

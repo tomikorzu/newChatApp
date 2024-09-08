@@ -7,18 +7,26 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <main>
-      <form class="form-join">
-        <input
-          type="text"
-          id="name"
-          maxlength="8"
-          placeholder="Ingrese su nombre "
-          required
-        />
-        <input type="text" id="room" placeholder="Ingrese la room" required />
-        <button id="join" type="submit">Join</button>
-      </form>
+    <form class="form-join">
+      <h2 class="h2-form-join">Gets started!</h2>
+      <input
+        type="text"
+        class="input-form-join"
+        id="name"
+        maxlength="8"
+        placeholder="Ingrese su nombre "
+        required
+      />
+      <input
+        type="text"
+        class="input-form-join"
+        id="room"
+        placeholder="Ingrese la room"
+        required
+      />
+      <button id="join" class="send-form-join" type="submit">Join</button>
+    </form>
+    <main class="chat">
       <ul class="chat-display"></ul>
       <p class="user-list"></p>
       <p class="room-list"></p>

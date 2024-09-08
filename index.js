@@ -47,7 +47,6 @@ io.on("connection", (socket) => {
     io.to(data.room).emit("message", data);
   });
 
-  socket.emit("message", buildMessage(ADMIN, "Welcome to the chat app!"));
 
   socket.on("enterRoom", ({ name, room }) => {
     const prevRoom = getUser(socket.id)?.room;
